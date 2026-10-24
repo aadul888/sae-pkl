@@ -2,7 +2,11 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#1e40af">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SAE PKL">
     <title>{{ $title ?? 'Dashboard' }} — {{ config('app.name', 'SAE PKL') }}</title>
     <style>
         :root {
@@ -104,6 +108,7 @@
             color: #475569;
             cursor: pointer;
             transition: all 0.15s ease;
+            min-height: 36px;
         }
         .btn-logout:hover {
             background: #f1f5f9;
@@ -148,14 +153,15 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.65rem 1.25rem;
-            font-size: 0.875rem;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.95rem;
             font-weight: 600;
             border-radius: 8px;
             border: none;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.15s ease;
+            min-height: 44px;
         }
         .btn-primary {
             background: var(--primary);
@@ -184,18 +190,28 @@
         }
         .form-control {
             width: 100%;
-            padding: 0.65rem 0.875rem;
-            font-size: 0.95rem;
+            padding: 0.75rem 0.875rem;
+            font-size: 1rem;
             border: 1px solid var(--border);
             border-radius: 8px;
             background: #fff;
             color: var(--text-main);
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            min-height: 44px;
         }
         .form-control:focus {
             outline: none;
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+        .desktop-nav {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .mobile-bottom-nav {
+            display: none;
         }
         .footer {
             background: #ffffff;
@@ -206,11 +222,66 @@
             color: var(--text-muted);
             margin-top: auto;
         }
+
+        /* Mobile-First Adaptations (<= 640px) */
+        @media (max-width: 640px) {
+            body {
+                padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+            }
+            .navbar {
+                padding: 0.65rem 1rem;
+            }
+            .desktop-nav {
+                display: none;
+            }
+            .main-content {
+                padding: 1.25rem 1rem;
+            }
+            .mobile-bottom-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 58px;
+                background: #ffffff;
+                border-top: 1px solid var(--border);
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                z-index: 60;
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+            }
+            .mobile-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                color: var(--text-muted);
+                font-size: 0.75rem;
+                font-weight: 500;
+                flex: 1;
+                height: 100%;
+                gap: 2px;
+            }
+            .mobile-nav-item.active {
+                color: var(--primary);
+                font-weight: 700;
+            }
+            .mobile-nav-icon {
+                font-size: 1.15rem;
+                line-height: 1;
+            }
+            .user-info .user-name {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 2rem;">
             <a href="{{ route('dashboard') }}" class="navbar-brand">
                 <div class="navbar-logo">SAE</div>
                 <div>
@@ -220,7 +291,7 @@
             </a>
 
             @auth
-                <div style="display: flex; gap: 1rem; font-size: 0.875rem; font-weight: 600;">
+                <div class="desktop-nav">
                     <a href="{{ route('dashboard') }}" style="color: {{ request()->routeIs('dashboard') ? '#1e40af' : '#64748b' }}; text-decoration: none;">Dashboard</a>
                     @if (in_array(auth()->user()->role, ['admin', 'waka_hubin'], true))
                         <a href="{{ route('master.index') }}" style="color: {{ request()->routeIs('master.*') ? '#1e40af' : '#64748b' }}; text-decoration: none;">Data Master</a>
@@ -245,7 +316,7 @@
                 </div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="btn-logout">Keluar</button>
+                    <button type="submit" class="btn-logout" title="Keluar dari sesi">Keluar</button>
                 </form>
             </div>
         @endauth
@@ -270,8 +341,35 @@
         @yield('content')
     </main>
 
+    @auth
+        <nav class="mobile-bottom-nav">
+            <a href="{{ route('dashboard') }}" class="mobile-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <span class="mobile-nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            @if (in_array(auth()->user()->role, ['admin', 'waka_hubin'], true))
+                <a href="{{ route('master.index') }}" class="mobile-nav-item {{ request()->routeIs('master.*') ? 'active' : '' }}">
+                    <span class="mobile-nav-icon">🗄️</span>
+                    <span>Master</span>
+                </a>
+            @endif
+            @if (in_array(auth()->user()->role, ['admin', 'waka_hubin', 'kepsek', 'kajur', 'guru_pembimbing'], true))
+                <a href="{{ route('students.index') }}" class="mobile-nav-item {{ request()->routeIs('students.*') ? 'active' : '' }}">
+                    <span class="mobile-nav-icon">👨‍🎓</span>
+                    <span>Siswa</span>
+                </a>
+            @endif
+            <a href="{{ route('profile.password') }}" class="mobile-nav-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
+                <span class="mobile-nav-icon">🔒</span>
+                <span>Sandi</span>
+            </a>
+        </nav>
+    @endauth
+
     <footer class="footer">
         &copy; {{ date('Y') }} SAE PKL &bull; Modul Praktik Kerja Lapangan SMK &bull; Versi 1.0.0 (Pondasi Selesai)
     </footer>
+</body>
+</html>
 </body>
 </html>

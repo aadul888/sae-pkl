@@ -2,7 +2,11 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#1e40af">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SAE PKL">
     <title>{{ $title ?? 'Masuk' }} — {{ config('app.name', 'SAE PKL') }}</title>
     <style>
         :root {
@@ -83,13 +87,14 @@
         }
         .form-control {
             width: 100%;
-            padding: 0.65rem 0.875rem;
-            font-size: 0.95rem;
+            padding: 0.75rem 0.875rem;
+            font-size: 1rem;
             border: 1px solid var(--border);
             border-radius: 8px;
             background: #fff;
             color: var(--text-main);
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            min-height: 44px;
         }
         .form-control:focus {
             outline: none;
