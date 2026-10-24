@@ -1,23 +1,23 @@
 @extends('layouts.guest', ['title' => 'Masuk ke Sistem'])
 
 @section('content')
-    <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: #0f172a;">Masuk</h2>
-    <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 1.5rem;">Gunakan username dan kata sandi Anda.</p>
+    <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-main);">Masuk</h2>
+    <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem;">Gunakan username dan kata sandi Anda.</p>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <x-ui.alert type="danger">
             <ul style="list-style-position: inside;">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
-        </div>
+        </x-ui.alert>
     @endif
 
     @if (session('info'))
-        <div class="alert alert-info">
+        <x-ui.alert type="info">
             {{ session('info') }}
-        </div>
+        </x-ui.alert>
     @endif
 
     <form method="POST" action="{{ route('login') }}">
@@ -40,6 +40,6 @@
             </label>
         </div>
 
-        <button type="submit" class="btn">Masuk ke Sistem</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Masuk ke Sistem</button>
     </form>
 @endsection

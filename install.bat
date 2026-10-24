@@ -51,6 +51,15 @@ echo [*] Menyiapkan tabel-tabel sistem...
 echo [*] Memasukkan konfigurasi awal sistem...
 "%PHP_BIN%" artisan db:seed --force
 
+:: 7. Kompilasi Aset Frontend jika npm tersedia
+if not exist "public\build" (
+    where npm >nul 2>nul
+    if not errorlevel 1 (
+        echo [*] Mengompilasi aset frontend (Vite)...
+        call npm run build
+    )
+)
+
 echo.
 echo ============================================================
 echo                  INSTALASI BERHASIL!

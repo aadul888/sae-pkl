@@ -1,0 +1,88 @@
+/**
+ * SAE PKL — Global Design Tokens
+ * Sumber utama token desain: warna, tipografi, spacing, radius, shadow, dan z-index.
+ */
+:root {
+    /* Brand & Primary Colors */
+    --primary: #1e40af;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --primary-border: #bfdbfe;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+
+    /* Neutrals & Surfaces */
+    --bg: #f8fafc;
+    --bg-alt: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-body: #334155;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --border-subtle: #f1f5f9;
+
+    /* Semantic Feedback Colors */
+    --success: #10b981;
+    --success-hover: #059669;
+    --success-light: #ecfdf5;
+    --success-border: #a7f3d0;
+    --success-text: #065f46;
+
+    --warning: #f59e0b;
+    --warning-hover: #d97706;
+    --warning-light: #fffbeb;
+    --warning-border: #fde68a;
+    --warning-text: #92400e;
+
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --danger-light: #fef2f2;
+    --danger-border: #fecaca;
+    --danger-text: #991b1b;
+
+    --info: #3b82f6;
+    --info-light: #eff6ff;
+    --info-border: #bfdbfe;
+    --info-text: #1e40af;
+
+    /* Role Badges */
+    --role-admin-bg: #dbeafe;
+    --role-admin-text: #1e40af;
+    --role-kepsek-bg: #ede9fe;
+    --role-kepsek-text: #6d28d9;
+    --role-waka-bg: #fef3c7;
+    --role-waka-text: #92400e;
+    --role-kajur-bg: #e0e7ff;
+    --role-kajur-text: #3730a3;
+    --role-guru-bg: #dcfce7;
+    --role-guru-text: #166534;
+    --role-industri-bg: #ffedd5;
+    --role-industri-text: #9a3412;
+    --role-siswa-bg: #f1f5f9;
+    --role-siswa-text: #475569;
+
+    /* Readiness Status Badges */
+    --status-siap-bg: #dcfce7;
+    --status-siap-text: #166534;
+    --status-tidak-siap-bg: #fee2e2;
+    --status-tidak-siap-text: #991b1b;
+    --status-belum-verif-bg: #fef3c7;
+    --status-belum-verif-text: #92400e;
+
+    /* Radii */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+
+    /* Dimensions & Transitions */
+    --min-touch-target: 44px;
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.2s ease-in-out;
+}
