@@ -1,87 +1,69 @@
 # SAE PKL (Sistem Aplikasi Edukasi — Praktik Kerja Lapangan)
 
-Sistem Informasi Manajemen Praktik Kerja Lapangan (PKL) tingkat SMK berbasis Laravel, dirancang sebagai modul satelit terintegrasi di dalam ekosistem **SAE (Sistem Aplikasi Edukasi)**.
+Aplikasi manajemen administrasi **Praktik Kerja Lapangan (PKL)** untuk tingkat Sekolah Menengah Kejuruan (SMK), dirancang praktis, cepat, dan terintegrasi langsung dengan ekosistem aplikasi **SAE**.
 
 ---
 
-## 1. Ringkasan Proyek
-SAE PKL mendigitalisasi siklus hidup lengkap pelaksanaan Praktik Kerja Lapangan (PKL) di SMK, mulai dari:
-1. **Perencanaan & Verifikasi:** Pemetaan mitra DU/DI, penetapan kuota industri, dan verifikasi kesiapan siswa oleh Kepala Jurusan (Kajur).
-2. **Penempatan & Penugasan:** Alur usulan dan validasi penempatan oleh Waka Hubin, serta penugasan Guru Pembimbing dan Pembimbing Industri.
-3. **Pelaksanaan & Monitoring:** Presensi mandiri/tervalidasi siswa, jurnal kegiatan harian, umpan balik pembimbing, dan catatan kunjungan monitoring berkala.
-4. **Penilaian & Sertifikasi:** Penilaian multidimensi (sekolah dan industri), rekapitulasi nilai, serta penerbitan dokumen sertifikat PKL resmi.
-5. **Pelaporan & Audit:** Rekapitulasi lintas jurusan, pelaporan tingkat sekolah, serta audit log aktivitas pengguna.
+## 🚀 Panduan Pemasangan Cepat (Fresh Install di Laragon)
+
+Aplikasi ini sudah dilengkapi dengan installer otomatis sehingga pengguna tidak perlu melakukan konfigurasi teknis yang rumit.
+
+### Langkah 1: Tempatkan Aplikasi
+Pastikan folder aplikasi diletakkan di direktori web server Laragon:
+```text
+C:\laragon\www\sae-pkl
+```
+
+### Langkah 2: Jalankan Installer Otomatis
+Buka folder `sae-pkl`, lalu **klik dua kali (double-click)** pada file:
+```text
+install.bat
+```
+Installer akan secara otomatis:
+- Menyiapkan berkas konfigurasi sistem.
+- Menghubungkan dan membuat basis data `sae_pkl`.
+- Menyiapkan tabel-tabel data aplikasi.
+- Memasukkan pengaturan awal sistem.
+
+### Langkah 3: Buka Aplikasi di Browser
+Setelah installer selesai, buka peramban web (Google Chrome / Microsoft Edge / Mozilla Firefox) dan ketik alamat:
+- **`http://sae-pkl.test`** (jika fitur auto-virtualhost Laragon aktif), atau
+- **`http://localhost:8000`** (jika menjalankan server via perintah `artisan.bat serve`).
 
 ---
 
-## 2. Prinsip Integrasi SAE Utama
-SAE PKL **tidak mengelola master data siswa, guru, jurusan, atau sekolah secara mandiri**.
-- Identitas siswa merujuk pada `peserta_didik_id` resmi SAE Utama.
-- Identitas guru merujuk pada `ptk_id` resmi SAE Utama.
-- Identitas jurusan/kompetensi keahlian merujuk pada `jurusan_id` resmi SAE Utama.
-- Struktur penugasan Kajur dan Waka Hubin merujuk pada `ptk_tugas_tambahan` di SAE Utama.
-- Seluruh data induk disinkronkan melalui layer integrasi resmi (REST API HTTPS / Direct Adapter) tanpa perlu input ulang manual.
+## 🔑 Masuk ke Aplikasi
+
+Gunakan akun Administrator awal untuk masuk ke dalam sistem:
+- **Nama Pengguna (Username):** `admin`
+- **Kata Sandi (Password):** `admin123`
+
+> ⚠️ **Saran Keamanan:** Setelah berhasil masuk, segera perbarui kata sandi Anda melalui menu profil di pojok kanan atas (*Ubah Password*) demi menjaga keamanan data sekolah. Anda juga dapat mengatur ulang kata sandi admin kapan saja melalui perintah:
+> ```cmd
+> artisan.bat sae:admin-setup
+> ```
 
 ---
 
-## 3. Peran Pengguna (RBAC)
-- **Admin SAE PKL:** Konfigurasi operasional sistem, manajemen integrasi, dan audit log.
-- **Kepala Sekolah:** Dashboard eksekutif, pemantauan progres lintas jurusan, dan supervisi.
-- **Waka Hubin (Hubungan Industri):** Manajemen mitra DU/DI, penetapan kuota, validasi penempatan, dan rekapitulasi sekolah.
-- **Kepala Jurusan (Kajur):** Verifikasi kesiapan siswa, usulan penempatan & pembimbing khusus jurusannya.
-- **Guru Pembimbing PKL:** Monitoring bimbingan, verifikasi jurnal, dan penilaian sekolah.
-- **Pembimbing Industri:** Validasi presensi tempat PKL, umpan balik jurnal, dan evaluasi industri.
-- **Siswa:** Pengisian presensi, jurnal harian, pemantauan status, dan unduh sertifikat.
+## ✨ Fitur Utama
+
+- **Integrasi Otomatis SAE:** Mengambil referensi data siswa, guru, dan jurusan dari aplikasi SAE utama tanpa perlu input ulang manual.
+- **Hak Akses Sesuai Peran:** Pembagian wewenang yang rapi untuk Kepala Sekolah, Waka Hubin, Kepala Jurusan (Kajur), Guru Pembimbing, Pembimbing Industri, dan Siswa.
+- **Verifikasi Kesiapan Siswa:** Membantu Kepala Jurusan memastikan siswa memenuhi kriteria sebelum diterjunkan ke industri.
+- **Jejak Audit Aktivitas:** Setiap aktivitas penting tercatat otomatis untuk menjamin akuntabilitas administrasi sekolah.
 
 ---
 
-## 4. Struktur Teknologi (Tech Stack)
-- **Framework:** Laravel 13.x
-- **Bahasa:** PHP 8.3+
-- **Database:** MySQL 8.4+ / MariaDB
-- **Frontend:** Blade Server-Rendered Views + CSS utility/framework responsif
-- **Autentikasi & Integrasi:** Laravel Session & Policy RBAC / SaeIntegrationInterface Adapter
+## 🛠️ Perintah Berguna
+
+Jika ingin melakukan pemeliharaan melalui terminal/command prompt:
+| Perintah | Fungsi |
+| :--- | :--- |
+| `install.bat` | Menjalankan pemasangan dan perbaikan otomatis basis data |
+| `artisan.bat sae:sync-master` | Memperbarui salinan data siswa, guru, dan jurusan dari SAE utama |
+| `artisan.bat sae:admin-setup` | Membuat atau mengatur ulang kata sandi administrator |
+| `artisan.bat serve` | Menjalankan server aplikasi secara mandiri |
 
 ---
 
-## 5. Panduan Menjalankan & Menguji Proyek
-- **Menjalankan Migrasi Database:**
-  ```cmd
-  cmd.exe /c "artisan.bat migrate"
-  ```
-- **Menyiapkan Akun Administrator:**
-  ```cmd
-  cmd.exe /c "artisan.bat sae:admin-setup"
-  ```
-- **Sinkronisasi Data Master dari SAE Utama:**
-  ```cmd
-  cmd.exe /c "artisan.bat sae:sync-master"
-  ```
-- **Menjalankan Server Lokal:**
-  ```cmd
-  cmd.exe /c "artisan.bat serve"
-  ```
-- **Menjalankan Automated Tests (PHPUnit):**
-  ```cmd
-  cmd.exe /c "php83.bat vendor/bin/phpunit"
-  ```
-
----
-
-## 6. Status Pengembangan Saat Ini
-- **Fase 0 (Perencanaan & Audit):** Selesai 100%.
-- **Fase 1 (Pondasi Sistem & Autentikasi):** Selesai 100% (Users, Settings, AuditLogs, Login/Logout, Rate Limiting, Update Password).
-- **Fase 2 (Integrasi Master & RBAC):** Selesai 100% (SaeIntegrationInterface, SaeDatabaseDriver, RefSekolah, RefJurusan, RefGuru, RefSiswa, EnsureUserHasRole, RefSiswaPolicy dengan isolasi jurusan SEC-01 & SEC-02).
-- **Fase 3 (Modul Persiapan, Mitra DU/DI & Penempatan):** Tahap pengembangan berikutnya (menunggu instruksi).
-
----
-
-## 7. Dokumentasi Terkait
-- [AGENTS.md](./AGENTS.md) — Aturan kerja AI Coding Agent.
-- [REQUISITES.md](./REQUISITES.md) — Kebutuhan fungsional dan nonfungsional.
-- [ARCHITECTURE.md](./ARCHITECTURE.md) — Arsitektur teknis, keamanan, dan alur integrasi.
-- [DATABASE_DESIGN.md](./DATABASE_DESIGN.md) — Rancangan skema dan relasi entitas.
-- [INTEGRATION_SAE.md](./INTEGRATION_SAE.md) — Kontrak integrasi dengan SAE Utama.
-- [MODULES.md](./MODULES.md) — Rincian 20 modul operasional.
-- [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md) — Roadmap implementasi bertahap.
-- [WORKLOG.md](./WORKLOG.md) — Catatan log aktivitas dan keputusan arsitektur.
+&copy; {{ date('Y') }} **SAE PKL** &bull; Bagian dari Ekosistem Sistem Aplikasi Edukasi (SAE).
